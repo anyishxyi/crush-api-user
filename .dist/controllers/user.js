@@ -27,7 +27,10 @@ exports.signup = async (req, res, next) => {
 
   const user = new _user.default({
     email: req.body.email,
-    password: hash
+    password: hash,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    created_date: new Date().toString()
   });
   const savedUser = await user.save();
   if (!savedUser) res.status(500).json({

@@ -45,6 +45,6 @@ app.use(_express.default.urlencoded({
 }));
 app.use((0, _cookieParser.default)());
 app.use(_express.default.static(_path.default.join(__dirname, '../public')));
-app.use('/api/auth', _user.default);
+app.use('/api-crush-user', _user.default);
 var _default = app;
 exports.default = _default;

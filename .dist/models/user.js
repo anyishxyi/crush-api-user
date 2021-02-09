@@ -20,6 +20,15 @@ const userSchema = _mongoose.default.Schema({
   password: {
     type: String,
     required: true
+  },
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
+  created_date: {
+    type: String
   }
 });
 
