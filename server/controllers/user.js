@@ -14,7 +14,7 @@ exports.signup = async (req, res, next) => {
     res.status(500).json({ error: 'error while hashing password' });   
   }
 
-  const user = new User({ email: req.body.email, password: hash, firstName: req.body.firstName, lastName: req.body.lastName, created_date: (new Date()).toString() });
+  const user = new User({ email: req.body.email, password: hash, firstName: req.body.firstName, lastName: req.body.lastName, created_date: new Date() });
   const savedUser = await user.save();
 
   if(!savedUser) res.status(500).json({ error: error });
