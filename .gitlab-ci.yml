@@ -39,7 +39,7 @@ test-crush:
     - merge_requests
 
 build-image-crush:
-  image: docker:20.10.1
+  image: docker:latest
   stage: build
   script:
     - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
