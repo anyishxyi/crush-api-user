@@ -22,7 +22,10 @@ build-crush:
 
 test-crush:
   stage: test
-  script: npm test
+  script:
+    - chmod +x ./setup_env.sh
+    - ./setup_env.sh
+    - npm test
   only:
     - merge_requests
 
