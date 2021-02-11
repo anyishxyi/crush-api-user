@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user';
 const userData = { 
-	email: "test-unit@crush.io",
+	email: "test-unit@crush.me",
 	password: "testtesttest",
 	firstName: "firstName", 
 	lastName: "lastName",
@@ -14,10 +14,9 @@ var savedUser = null;
 
 beforeAll(() => {
 	mongoose.connect(process.env.__MONGO_URI__, { useUnifiedTopology: true, useNewUrlParser: true })
-					.then(() => { console.log('\nSuccessully connected to MongoDB Atlas !\n')})
+					.then(() => { console.log('\nSuccessully connected to MongoDB Atlas !\n')} )
 					.catch((error) => console.error('\nUnable to connect to MongoDB Atlas\n', error));
 });
-
 describe('User Model Test', () => {
 	it('create & save user successfully', async () => {
 		const validUser = new UserModel(userData);
@@ -69,7 +68,9 @@ describe('User Model Test', () => {
 
 afterAll( async () => {
 	try {
-		await UserModel.findByIdAndRemove(savedUser._id, (error) => { if(error) console.log(error); });	
+		await UserModel.findOneAndDelete({_id: savedUser._id});
+		await mongoose.disconnect()
+		console.log('\nSuccessully disconnected to MongoDB Atlas !\n')
 	} catch (error) {
 		console.error(error);
 	}
