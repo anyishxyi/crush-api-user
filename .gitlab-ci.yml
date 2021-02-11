@@ -25,6 +25,7 @@ test-crush:
   script:
     - chmod +x ./setup_env.sh
     - ./setup_env.sh
+    - cat .env
     - npm test
   only:
     - merge_requests
