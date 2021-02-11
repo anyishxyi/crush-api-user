@@ -30,7 +30,7 @@ exports.signup = async (req, res, next) => {
     password: hash,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    created_date: new Date().toString()
+    created_date: new Date()
   });
   const savedUser = await user.save();
   if (!savedUser) res.status(500).json({

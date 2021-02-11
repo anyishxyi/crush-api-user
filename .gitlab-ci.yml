@@ -1,8 +1,9 @@
-image: node:latest
+image: node:14.5.5-alpine
 
 stages:
   - build
   - test
+  # - deploy
 
 cache:
   paths:
@@ -11,8 +12,10 @@ cache:
 build-crush:
   stage: build
   script:
-    - npm install
+    - npm install --progress=false
     - npm run build
+  only:
+    - merge_requests
   artifacts:
     paths:
       - node_modules/
@@ -20,3 +23,12 @@ build-crush:
 test-crush:
   stage: test
   script: npm test
+  only:
+    - merge_requests
+
+# deploy-crush:
+#   stage: deploy
+#   script:
+#     - echo comming soon
+#   only:
+#     - master
