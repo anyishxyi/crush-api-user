@@ -3,6 +3,9 @@ stages:
   - test
   # - push
 
+services:
+  - docker:dind
+
 cache:
   paths:
     - node_modules/
