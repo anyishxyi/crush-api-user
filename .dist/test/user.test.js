@@ -11,7 +11,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 require('dotenv').config();
 
 const userData = {
-  email: "test-unit@crush.io",
+  email: "test-unit@crush.me",
   password: "testtesttest",
   firstName: "firstName",
   lastName: "lastName",
@@ -67,9 +67,11 @@ describe('User Model Test', () => {
 });
 afterAll(async () => {
   try {
-    await _user.default.findByIdAndRemove(savedUser._id, error => {
-      if (error) console.log(error);
+    await _user.default.findOneAndDelete({
+      _id: savedUser._id
     });
+    await _mongoose.default.disconnect();
+    console.log('\nSuccessully disconnected to MongoDB Atlas !\n');
   } catch (error) {
     console.error(error);
   }

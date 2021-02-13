@@ -1,16 +1,7 @@
 stages:
   - build
   - test
-  # - push
-
-services:
-  - docker:dind
-
-variables:
-  API_IMAGE: registry.gitlab.com:5555/n19l/crush-api-user:latest
-
-before_script:
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+  - push
 
 cache:
   paths:
@@ -38,12 +29,18 @@ test-crush:
   only:
     - merge_requests
 
-build-image-crush:
+push-image-crush:
   image: docker:latest
-  stage: build
+  stage: push
+  variables:
+    API_IMAGE: registry.gitlab.com:5555/n19l/crush-api-user:latest
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  services:
+    - docker:dind
   script:
-    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - docker build --pull -t $API_IMAGE .
-    - docker push $API_IMAGE
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    # - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE"
   only:
     - master

@@ -21,7 +21,8 @@ var _user = _interopRequireDefault(require("./routes/user"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// require('dotenv').config();
+require('dotenv').config();
+
 const app = (0, _express.default)();
 
 _mongoose.default.connect(process.env.__MONGO_URI__, {
