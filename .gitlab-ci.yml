@@ -32,8 +32,6 @@ test-crush:
 push-image-crush:
   image: docker:latest
   stage: push
-  variables:
-    API_IMAGE: registry.gitlab.com:5555/n19l/crush-api-user:latest
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   services:
