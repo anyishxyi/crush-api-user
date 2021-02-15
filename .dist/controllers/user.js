@@ -79,3 +79,21 @@ exports.login = (req, res, next) => {
     });
   });
 };
+
+exports.users = async (req, res, next) => {
+  const users = await _user.default.find().catch(error => {
+    res.status(500).json({
+      error: error
+    });
+  });
+
+  if (!users) {
+    return res.status(4014).json({
+      error: new Error('Users not found!')
+    });
+  }
+
+  res.status(200).json({
+    users: users
+  });
+};
