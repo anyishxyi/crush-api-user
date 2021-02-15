@@ -47,6 +47,6 @@ publish-image-crush:
     - git tag -a $version -m "Version created by gitlab-ci before publishing on gitlab registry"
     - git push tag-origin $version
     - docker build --pull -t "$CI_REGISTRY_IMAGE":lastest -t "$CI_REGISTRY_IMAGE":"$version" .
-    - docker push "$CI_REGISTRY_IMAGE"
+    - docker push "$CI_REGISTRY_IMAGE":lastest "$CI_REGISTRY_IMAGE":"$version"
   only:
     - master
