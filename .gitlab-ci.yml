@@ -37,7 +37,7 @@ publish-image-crush:
   variables:
     version: 1.0.13
   before_script:
-    - docker login -u gitlab-ci-token -p $GITLAB_ACCESS_TOKEN $CI_REGISTRY
+    - docker login -u gitlab-ci-token -p $GITLAB_ACCESS_TOKEN $CI_REGISTRY/$CI_PROJECT_PATH
   services:
     - docker:dind
   script:
