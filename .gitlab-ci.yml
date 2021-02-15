@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - push
+  - publish
 
 cache:
   paths:
@@ -15,6 +15,7 @@ build-crush:
     - npm run build
   only:
     - merge_requests
+    - master
   artifacts:
     paths:
       - node_modules/
@@ -28,6 +29,7 @@ test-crush:
     - npm test
   only:
     - merge_requests
+    - master
 
 build-image-crush:
   image: docker:latest
@@ -39,16 +41,23 @@ build-image-crush:
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
   only:
-    - merge_requests
+    - master
 
-push-image-crush:
+publish-image-crush:
   image: docker:latest
-  stage: push
+  stage: publish
+  variables:
+    version: 1.0.1
   before_script:
+    - git config user.email "${GITLAB_USER_EMAIL}"
+    - git config user.name "${GITLAB_USER_NAME}"
+    - git remote add demo-tag-origin https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}
+    - git tag -a -a $version -m "Version created by gitlab-ci before publishing on gitlab registry"
+    - git push demo-tag-origin -a $version
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   services:
     - docker:dind
   script:
     - docker push "$CI_REGISTRY_IMAGE"
   only:
-    - merge_requests
+    - master
