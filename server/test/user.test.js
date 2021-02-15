@@ -26,7 +26,10 @@ describe('User Model Test', () => {
 		expect(savedUser.email).toBe(userData.email);
 		expect(savedUser.firstName).toBe(userData.firstName);
 		expect(savedUser.lastName).toBe(userData.lastName);
-		// expect(savedUser.created_date).toBe(userData.created_date);
+	});
+	it('get all users', async () => {
+		const users = await UserModel.find();
+		expect(users.length).toBeDefined();
 	});
 
 	// it('find a user by id', async () => {
