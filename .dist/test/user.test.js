@@ -36,8 +36,20 @@ describe('User Model Test', () => {
     expect(savedUser.lastName).toBe(userData.lastName);
   });
   it('get all users', async () => {
-    const users = await _user.default.find();
-    expect(users.length).toBeDefined();
+    try {
+      const users = await _user.default.find();
+      expect(users.length).toBeDefined();
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  it('get user info', async () => {
+    try {
+      const users = await _user.default.find();
+      expect(users.length).toBeDefined();
+    } catch (error) {
+      console.error(error);
+    }
   }); // it('find a user by id', async () => {
   // 	const salt = bcrypt.genSaltSync(10);
   // 	const hash = bcrypt.hashSync(userData.password, salt);

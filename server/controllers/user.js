@@ -90,7 +90,6 @@ exports.users = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
   try {
     const userID = req.parms.id ? req.parms.id : '';
-    console.log('userID', userID)
     if (userID === '') res.status(404).json({ msg: 'user not found !' });
 
     const user = await User.findOne({_id: userID}).catch((error) => { res.status(500).json({ error: error }); });
