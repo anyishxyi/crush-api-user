@@ -49,6 +49,7 @@ publish-image-crush:
   variables:
     version: 1.0.1
   before_script:
+    - npm i git
     - git config user.email "${GITLAB_USER_EMAIL}"
     - git config user.name "${GITLAB_USER_NAME}"
     - git remote add demo-tag-origin https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}
