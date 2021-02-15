@@ -47,7 +47,7 @@ publish-image-crush:
   image: docker:20.10-git
   stage: publish
   variables:
-    version: 1.0.1
+    version: 1.0.2
   before_script:
     - git config user.email "${GITLAB_USER_EMAIL}"
     - git config user.name "${GITLAB_USER_NAME}"
