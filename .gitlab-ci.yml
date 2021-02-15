@@ -33,7 +33,7 @@ test-crush:
 
 build-image-crush:
   image: 
-    name: alpine/git:latest
+    name: alpine-bash-git:latest
     entrypoint: [""]
   stage: build
   before_script:
@@ -47,7 +47,7 @@ build-image-crush:
 
 publish-image-crush:
   image:
-    name: alpine/git:latest
+    name: alpine-bash-git:latest
     entrypoint: [""]
   stage: publish
   variables:
