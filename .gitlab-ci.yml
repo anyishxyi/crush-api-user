@@ -32,7 +32,9 @@ test-crush:
     - master
 
 build-image-crush:
-  image: alpine/git:latest
+  image: 
+    name: alpine/git:latest
+    entrypoint: [""]
   stage: build
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -44,7 +46,9 @@ build-image-crush:
     - master
 
 publish-image-crush:
-  image: alpine/git:latest
+  image:
+    name: alpine/git:latest
+    entrypoint: [""]
   stage: publish
   variables:
     version: 1.0.1
