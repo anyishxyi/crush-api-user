@@ -33,7 +33,11 @@ describe('User Model Test', () => {
     expect(savedUser._id).toBeDefined();
     expect(savedUser.email).toBe(userData.email);
     expect(savedUser.firstName).toBe(userData.firstName);
-    expect(savedUser.lastName).toBe(userData.lastName); // expect(savedUser.created_date).toBe(userData.created_date);
+    expect(savedUser.lastName).toBe(userData.lastName);
+  });
+  it('get all users', async () => {
+    const users = await _user.default.find();
+    expect(users.length).toBeDefined();
   }); // it('find a user by id', async () => {
   // 	const salt = bcrypt.genSaltSync(10);
   // 	const hash = bcrypt.hashSync(userData.password, salt);

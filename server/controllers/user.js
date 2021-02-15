@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 
+/**
+  * create new user
+ */
 exports.signup = async (req, res, next) => {
   const pass = req.body.password ? req.body.password : '';
   if(!pass) res.status(500).json({ error: 'error while hashing password' });
@@ -22,6 +25,9 @@ exports.signup = async (req, res, next) => {
   res.status(201).json({ userSaved: savedUser });
 };
 
+/**
+  * Login user
+ */
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email }).then(
     (user) => {
@@ -63,12 +69,39 @@ exports.login = (req, res, next) => {
   );
 }
 
+/**
+  * Get all users
+ */
 exports.users = async (req, res, next) => {
-  const users = await User.find().catch((error) => { res.status(500).json({ error: error }); });
-  if (!users) {
-    return res.status(404).json({
-      error: new Error('Users not found!')
-    });
+  try {
+    const users = await User.find().catch((error) => { res.status(500).json({ error: error }); });
+    if (!users) {
+      return res.status(404).json({ error: new Error('Users not found!') });
+    }
+    res.status(200).json({ users: users });
+  } catch (error) {
+    res.status(500).json({ msg: error });
   }
-  res.status(200).json({ users: users });
+}
+
+/**
+  * Get a user info
+ */
+exports.getUser = async (req, res, next) => {
+  try {
+    const userID = req.parms.id ? req.parms.id : '';
+    console.log('userID', userID)
+    if (userID === '') res.status(404).json({ msg: 'user not found !' });
+
+    const user = await User.findOne({_id: userID}).catch((error) => { res.status(500).json({ error: error }); });
+    
+    if (!user) {
+      return res.status(404).json({
+        error: new Error('User not found!')
+      });
+    }
+    res.status(200).json({ user: user[0] });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 }

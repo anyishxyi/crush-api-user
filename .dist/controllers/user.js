@@ -8,6 +8,9 @@ var _user = _interopRequireDefault(require("../models/user"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+  * create new user
+ */
 exports.signup = async (req, res, next) => {
   const pass = req.body.password ? req.body.password : '';
   if (!pass) res.status(500).json({
@@ -40,6 +43,10 @@ exports.signup = async (req, res, next) => {
     userSaved: savedUser
   });
 };
+/**
+  * Login user
+ */
+
 
 exports.login = (req, res, next) => {
   _user.default.findOne({
@@ -79,21 +86,66 @@ exports.login = (req, res, next) => {
     });
   });
 };
+/**
+  * Get all users
+ */
+
 
 exports.users = async (req, res, next) => {
-  const users = await _user.default.find().catch(error => {
-    res.status(500).json({
-      error: error
+  try {
+    const users = await _user.default.find().catch(error => {
+      res.status(500).json({
+        error: error
+      });
     });
-  });
 
-  if (!users) {
-    return res.status(404).json({
-      error: new Error('Users not found!')
+    if (!users) {
+      return res.status(404).json({
+        error: new Error('Users not found!')
+      });
+    }
+
+    res.status(200).json({
+      users: users
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: error
     });
   }
+};
+/**
+  * Get a user info
+ */
 
-  res.status(200).json({
-    users: users
-  });
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const userID = req.parms.id ? req.parms.id : '';
+    console.log('userID', userID);
+    if (userID === '') res.status(404).json({
+      msg: 'user not found !'
+    });
+    const user = await _user.default.findOne({
+      _id: userID
+    }).catch(error => {
+      res.status(500).json({
+        error: error
+      });
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        error: new Error('User not found!')
+      });
+    }
+
+    res.status(200).json({
+      user: user[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: error
+    });
+  }
 };
