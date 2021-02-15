@@ -35,7 +35,7 @@ publish-image-crush:
   image: docker:20.10-git
   stage: publish
   variables:
-    version: 1.0.8
+    version: 1.0.9
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   services:
@@ -46,7 +46,7 @@ publish-image-crush:
     - git remote add tag-origin https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}
     - git tag -a $version -m "Version created by gitlab-ci before publishing on gitlab registry"
     - git push tag-origin $version
-    - docker build --pull -t "$CI_REGISTRY_IMAGE":lastest -t "$CI_REGISTRY_IMAGE":"$version" .
-    - docker push -a "$CI_REGISTRY_IMAGE"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE":"$version" .
+    - docker push "$CI_REGISTRY_IMAGE":"$version"
   only:
     - master
