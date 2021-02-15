@@ -64,9 +64,9 @@ exports.login = (req, res, next) => {
 }
 
 exports.users = async (req, res, next) => {
-  const users = await User.find().catch((error) => { res.status(500).json({ error: error });});
+  const users = await User.find().catch((error) => { res.status(500).json({ error: error }); });
   if (!users) {
-    return res.status(4014).json({
+    return res.status(404).json({
       error: new Error('Users not found!')
     });
   }
