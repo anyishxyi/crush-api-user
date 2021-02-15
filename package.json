@@ -1,7 +1,8 @@
 {
   "name": "crush-api-user",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "main": "server.js",
+  "description": "crush's user api",
   "scripts": {
     "start": "npm run prod",
     "transpile": "babel ./server --out-dir .dist",
