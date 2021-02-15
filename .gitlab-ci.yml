@@ -31,33 +31,22 @@ test-crush:
     - merge_requests
     - master
 
-build-image-crush:
-  image: docker:20.10-git
-  stage: build
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  services:
-    - docker:dind
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-  only:
-    - master
-
 publish-image-crush:
   image: docker:20.10-git
   stage: publish
   variables:
     version: 1.0.2
   before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  services:
+    - docker:dind
+  script:
     - git config user.email "${GITLAB_USER_EMAIL}"
     - git config user.name "${GITLAB_USER_NAME}"
     - git remote add tag-origin https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}
     - git tag -a $version -m "Version created by gitlab-ci before publishing on gitlab registry"
     - git push tag-origin $version
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  services:
-    - docker:dind
-  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE":lastest -t "$CI_REGISTRY_IMAGE":"$version" .
     - docker push "$CI_REGISTRY_IMAGE"
   only:
     - master
