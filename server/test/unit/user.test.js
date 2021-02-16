@@ -1,7 +1,7 @@
 require('dotenv').config();
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import UserModel from '../models/user';
+import UserModel from '../../models/user';
 const userData = { 
 	email: "test-unit@crush.me",
 	password: "testtesttest",
@@ -17,7 +17,7 @@ beforeAll(() => {
 					.then(() => { console.log('\nSuccessully connected to MongoDB Atlas !\n')} )
 					.catch((error) => console.error('\nUnable to connect to MongoDB Atlas\n', error));
 });
-describe('User Model Test', () => {
+describe('User Model Unit Test', () => {
 	it('create & save user successfully', async () => {
 		const validUser = new UserModel(userData);
 		savedUser = await validUser.save();

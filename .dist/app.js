@@ -17,7 +17,7 @@ var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 
 var _morgan = _interopRequireDefault(require("morgan"));
 
-var _user = _interopRequireDefault(require("./routes/user"));
+var _user = _interopRequireDefault(require("./router/user"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,6 +45,6 @@ app.use(_express.default.urlencoded({
 }));
 app.use((0, _cookieParser.default)());
 app.use(_express.default.static(_path.default.join(__dirname, '../public')));
-app.use('/api-crush-user', _user.default);
+app.use('/user', _user.default);
 var _default = app;
 exports.default = _default;

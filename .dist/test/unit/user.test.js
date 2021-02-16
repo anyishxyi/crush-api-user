@@ -4,7 +4,7 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
-var _user = _interopRequireDefault(require("../models/user"));
+var _user = _interopRequireDefault(require("../../models/user"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,7 +26,7 @@ beforeAll(() => {
     console.log('\nSuccessully connected to MongoDB Atlas !\n');
   }).catch(error => console.error('\nUnable to connect to MongoDB Atlas\n', error));
 });
-describe('User Model Test', () => {
+describe('User Model Unit Test', () => {
   it('create & save user successfully', async () => {
     const validUser = new _user.default(userData);
     savedUser = await validUser.save();
@@ -36,20 +36,17 @@ describe('User Model Test', () => {
     expect(savedUser.lastName).toBe(userData.lastName);
   });
   it('get all users', async () => {
-    try {
-      const users = await _user.default.find();
-      expect(users.length).toBeDefined();
-    } catch (error) {
-      console.error(error);
-    }
+    const users = await _user.default.find();
+    expect(users.length).toBeDefined();
   });
   it('get user info', async () => {
-    try {
-      const users = await _user.default.find();
-      expect(users.length).toBeDefined();
-    } catch (error) {
-      console.error(error);
-    }
+    const userFound = await _user.default.findOne({
+      _id: savedUser._id
+    });
+    expect(userFound._id.toString()).toBe(savedUser._id.toString());
+    expect(userFound.email).toBe(savedUser.email);
+    expect(userFound.firstName).toBe(savedUser.firstName);
+    expect(userFound.lastName).toBe(savedUser.lastName);
   }); // it('find a user by id', async () => {
   // 	const salt = bcrypt.genSaltSync(10);
   // 	const hash = bcrypt.hashSync(userData.password, salt);
