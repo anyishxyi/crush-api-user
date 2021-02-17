@@ -1,6 +1,6 @@
 {
   "name": "crush-api-user",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "main": "server.js",
   "description": "crush's user api",
   "scripts": {
