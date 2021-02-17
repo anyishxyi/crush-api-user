@@ -1,6 +1,6 @@
 {
   "name": "crush-api-user",
-  "version": "1.0.19",
+  "version": "1.1.0",
   "main": "server.js",
   "description": "crush's user api",
   "scripts": {
@@ -12,7 +12,7 @@
     "dev": "NODE_ENV=development npm-run-all build server",
     "prod": "NODE_ENV=production npm-run-all build server",
     "watch:dev": "nodemon",
-    "test": "jest --runInBand --detectOpenHandles --testPathPattern=server/test/functional"
+    "test": "jest --runInBand --detectOpenHandles --testPathPattern=server/test"
   },
   "babel": {
     "presets": [
