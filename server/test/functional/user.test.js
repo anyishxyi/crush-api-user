@@ -31,15 +31,27 @@ describe("testing-user-routes", () => {
 		expect(savedUser.lastName).toBe(userData.lastName)
 		done()
   });
-	it('GET /user get user info', async done => {
+	it('GET /user/:id get user info', async done => {
 		const response = await request.get(`/user/${savedUser._id}`)
-		const userFound = response.body ? response.body : null
+		const userFound = response.body ? response.body.user : null
 		expect(userFound._id.toString()).toBe(savedUser._id.toString())
 		expect(userFound.email).toBe(savedUser.email)
 		expect(userFound.firstName).toBe(savedUser.firstName)
 		expect(userFound.lastName).toBe(savedUser.lastName)
 		done()
 	});
+  it("PUT /user/:id update user info", async done => {
+		savedUser.firstName = 'newFirstName'
+    const response = await request.put(`/user/${savedUser._id}`)
+																	.send(savedUser);
+		const updatedUser = response.body ? response.body.user : null
+		expect(response.status).toBe(200)
+		expect(updatedUser._id).toBe(savedUser._id)
+		expect(updatedUser.email).toBe(savedUser.email)
+		expect(updatedUser.firstName).toBe(savedUser.firstName) /* the info updated */
+		expect(updatedUser.lastName).toBe(savedUser.lastName)
+		done()
+  });
 });
 
 afterAll( async () => {
