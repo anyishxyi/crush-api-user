@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import UserModel from '../../models/user';
 const userData = { 
-	email: "test-unit@crush.me",
+	email: "test-unit@crush.fr",
 	password: "testtesttest",
 	firstName: "firstName", 
 	lastName: "lastName",
@@ -37,6 +37,17 @@ describe('User Model Unit Test', () => {
 		expect(userFound.email).toBe(savedUser.email);
 		expect(userFound.firstName).toBe(savedUser.firstName);
 		expect(userFound.lastName).toBe(savedUser.lastName);
+	});
+	it('update user info', async () => {
+		savedUser.firstName = 'newFirstName'
+		const query = { '_id': savedUser._id }
+		await UserModel.findOneAndUpdate({_id: savedUser._id}, savedUser, {upsert: true}, (err, updatedUser) => {
+        if (err) return res.send(500, {error: err});
+        expect(updatedUser._id.toString()).toBe(savedUser._id.toString());
+				expect(updatedUser.email).toBe(savedUser.email);
+				expect(updatedUser.firstName).toBe(savedUser.firstName);
+				expect(updatedUser.lastName).toBe(savedUser.lastName);
+    })
 	});
 
 	// it('find a user by id', async () => {
