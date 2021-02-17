@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+import UserModel from '../../models/user';
 const supertest = require("supertest"); // supertest is a framework that allows to easily test web apis
 import app from '../../app';
 
 const request = supertest(app);
 const userData = { 
-	email: "test-func11@crush.com",
+	email: "test-func@crush.me",
 	password: "testtesttest",
 	firstName: "firstName", 
 	lastName: "lastName"
@@ -21,7 +22,7 @@ describe("testing-user-routes", () => {
   it("Post /user create an user", async done => {
     const response = await request.post("/user")
 																	.send(userData);
-		const savedUser = response.body ? response.body.userSaved : null
+		savedUser = response.body ? response.body.userSaved : null
 		expect(response.text).toBeDefined()
 		expect(response.status).toBe(201)
 		expect(savedUser._id).toBeDefined()
@@ -34,9 +35,8 @@ describe("testing-user-routes", () => {
 
 afterAll( async () => {
 	try {
-		// await UserModel.findOneAndDelete({_id: savedUser._id});
+		await UserModel.findOneAndDelete({_id: savedUser._id});
 		await mongoose.disconnect()
-		console.log('\nSuccessully disconnected to MongoDB Atlas !\n')
 	} catch (error) {
 		console.error(error);
 	}
