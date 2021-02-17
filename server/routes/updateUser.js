@@ -6,7 +6,6 @@ import User from '../models/user';
 exports.updateUser = async (req, res, next) => {
   try {
     if ( !req.params.id || !req.body.email ) return res.status(422).json({ msg: 'Missing required argument' });
-    console.log('id : ', req.params.id)
     let updateUser = {}
     if (req.params.id) updateUser._id = req.params.id
     if (req.body.email) updateUser.email = req.body.email
