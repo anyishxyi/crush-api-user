@@ -6,7 +6,7 @@ import User from '../models/user';
 exports.updateUser = async (req, res, next) => {
   try {
     if ( !req.params.id || !req.body.email ) return res.status(422).json({ msg: 'Missing required argument' });
-
+    console.log('id : ', req.params.id)
     let updateUser = {}
     if (req.params.id) updateUser._id = req.params.id
     if (req.body.email) updateUser.email = req.body.email
@@ -15,7 +15,7 @@ exports.updateUser = async (req, res, next) => {
     if (req.body.lastName) updateUser.lastName = req.body.lastName
     if (req.body.created_date) updateUser.created_date = req.body.created_date
 
-    const query = { 'user._id': updateUser._id }
+    const query = { '_id': updateUser._id }
 
     await User.findOneAndUpdate(query, updateUser, {upsert: true}, (err, updatedUser) => {
         if (err) return res.send(500, {error: err});

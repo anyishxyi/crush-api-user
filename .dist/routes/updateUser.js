@@ -12,6 +12,7 @@ exports.updateUser = async (req, res, next) => {
     if (!req.params.id || !req.body.email) return res.status(422).json({
       msg: 'Missing required argument'
     });
+    console.log('id : ', req.params.id);
     let updateUser = {};
     if (req.params.id) updateUser._id = req.params.id;
     if (req.body.email) updateUser.email = req.body.email;
@@ -20,7 +21,7 @@ exports.updateUser = async (req, res, next) => {
     if (req.body.lastName) updateUser.lastName = req.body.lastName;
     if (req.body.created_date) updateUser.created_date = req.body.created_date;
     const query = {
-      'user._id': updateUser._id
+      '_id': updateUser._id
     };
     await _user.default.findOneAndUpdate(query, updateUser, {
       upsert: true
