@@ -5,7 +5,7 @@ import app from '../../app';
 
 const request = supertest(app);
 const userData = { 
-	email: "test-func@crush.me",
+	email: "test-fun10c@crush.me",
 	password: "testtesttest",
 	firstName: "firstName", 
 	lastName: "lastName"
