@@ -16,7 +16,7 @@ exports.updateUser = async (req, res, next) => {
 
     const query = { '_id': updateUser._id }
 
-    await User.findOneAndUpdate(query, updateUser, {upsert: true}, (err, updatedUser) => {
+    await User.findOneAndUpdate(query, updateUser, { returnOriginal: false }, (err, updatedUser) => {
         if (err) return res.send(500, {error: err});
         return res.status(200).json({ user: updatedUser });
     });
