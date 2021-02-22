@@ -27,7 +27,9 @@ exports.getUser = async (req, res, next) => {
       });
     }
 
-    res.status(200).json(user);
+    res.status(200).json({
+      'user': user
+    });
   } catch (error) {
     res.status(500).json({
       msg: error

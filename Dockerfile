@@ -1,8 +1,8 @@
 FROM node:lts-alpine3.13
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
+RUN mkdir -p /usr/src/services/user
+WORKDIR /usr/src/services/user
+COPY package.json /usr/src/services/user/
 RUN npm install
-COPY . /usr/src/app
-EXPOSE 3000
+COPY . /usr/src/services/user
+EXPOSE 3001
 CMD [ “npm”, “start” ]

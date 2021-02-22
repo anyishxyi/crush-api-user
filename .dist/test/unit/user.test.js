@@ -23,7 +23,7 @@ beforeAll(() => {
     useUnifiedTopology: true,
     useNewUrlParser: true
   }).then(() => {
-    console.log('\nSuccessully connected to MongoDB Atlas !\n');
+    /*console.log('\nSuccessully connected to MongoDB Atlas !\n')*/
   }).catch(error => console.error('\nUnable to connect to MongoDB Atlas\n', error));
 });
 describe('User Model Unit Test', () => {
@@ -49,23 +49,22 @@ describe('User Model Unit Test', () => {
     expect(userFound.lastName).toBe(savedUser.lastName);
   });
   it('update user info', async () => {
-    savedUser.firstName = 'newFirstName';
+    const updateUser = {
+      firstName: 'newFirstName'
+    };
     const query = {
       '_id': savedUser._id
     };
-    await _user.default.findOneAndUpdate({
-      _id: savedUser._id
-    }, savedUser, {
-      upsert: true
-    }, (err, updatedUser) => {
-      if (err) return res.send(500, {
-        error: err
-      });
-      expect(updatedUser._id.toString()).toBe(savedUser._id.toString());
-      expect(updatedUser.email).toBe(savedUser.email);
-      expect(updatedUser.firstName).toBe(savedUser.firstName);
-      expect(updatedUser.lastName).toBe(savedUser.lastName);
+    const updatedUser = await _user.default.findOneAndUpdate(query, updateUser, {
+      returnOriginal: false
     });
+    if (!updatedUser) return res.send(500, {
+      error: err
+    });
+    expect(updatedUser._id.toString()).toBe(savedUser._id.toString());
+    expect(updatedUser.email).toBe(savedUser.email);
+    expect(updatedUser.firstName).toBe(savedUser.firstName);
+    expect(updatedUser.lastName).toBe(savedUser.lastName);
   }); // it('find a user by id', async () => {
   // 	const salt = bcrypt.genSaltSync(10);
   // 	const hash = bcrypt.hashSync(userData.password, salt);
@@ -102,8 +101,7 @@ afterAll(async () => {
     await _user.default.findOneAndDelete({
       _id: savedUser._id
     });
-    await _mongoose.default.disconnect();
-    console.log('\nSuccessully disconnected to MongoDB Atlas !\n');
+    await _mongoose.default.disconnect(); // console.log('\nSuccessully disconnected to MongoDB Atlas !\n')
   } catch (error) {
     console.error(error);
   }
