@@ -14,12 +14,12 @@ exports.updateUser = async (req, res, next) => {
     if (req.body.lastName) updateUser.lastName = req.body.lastName
     if (req.body.created_date) updateUser.created_date = req.body.created_date
 
-    const query = { '_id': updateUser._id }
+    const updatedUser = await User.findByIdAndUpdate( { '_id': updateUser._id }, updateUser )
 
-    await User.findOneAndUpdate(query, updateUser, { returnOriginal: false }, (err, updatedUser) => {
-        if (err) return res.send(500, {error: err});
-        return res.status(200).json({ user: updatedUser });
-    });
+    if (!updatedUser) return res.send(500, {error: err});
+
+    return res.status(200).json({ user: updatedUser });
+
   } catch (error) {
     res.status(500).json({ msg: error });
   }

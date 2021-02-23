@@ -5,7 +5,7 @@ import app from '../../app';
 
 const request = supertest(app);
 const userData = { 
-	email: "test-fun10c@crush.me",
+	email: "test-fun100c@crush.me",
 	password: "testtesttest",
 	firstName: "firstName", 
 	lastName: "lastName"
@@ -41,9 +41,8 @@ describe("testing-user-routes", () => {
 		done()
 	});
   it("PUT /user/:id update user info", async done => {
-		savedUser.firstName = 'newFirstName'
     const response = await request.put(`/user/${savedUser._id}`)
-																	.send(savedUser);
+																	.send({ email: savedUser.email, firstName: 'newFirstName' });
 		const updatedUser = response.body ? response.body.user : null
 		expect(response.status).toBe(200)
 		expect(updatedUser._id).toBe(savedUser._id)

@@ -10,7 +10,7 @@ import userRouter from './router/user';
 
 const app = express();
 
-mongoose.connect(process.env.__MONGO_URI__, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(process.env.__MONGO_URI__, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify : false })
 				.then(() => { console.log('\nSuccessully connected to MongoDB Atlas !\n')})
 				.catch((error) => console.error('\nUnable to connect to MongoDB Atlas\n', error));
 

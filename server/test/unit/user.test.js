@@ -13,7 +13,7 @@ const userData = {
 var savedUser = null;
 
 beforeAll(() => {
-	mongoose.connect(process.env.__MONGO_URI__, { useUnifiedTopology: true, useNewUrlParser: true })
+	mongoose.connect(process.env.__MONGO_URI__, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify : false })
 					.then(() => { /*console.log('\nSuccessully connected to MongoDB Atlas !\n')*/} )
 					.catch((error) => console.error('\nUnable to connect to MongoDB Atlas\n', error));
 });
@@ -42,7 +42,10 @@ describe('User Model Unit Test', () => {
 		const updateUser = { firstName: 'newFirstName' }
 		
 		const query = { '_id': savedUser._id }
-		const updatedUser = await UserModel.findOneAndUpdate( query, updateUser, { returnOriginal: false })
+
+		// const updatedUser = await UserModel.updateOne(query, updateUser);
+		// console.log("updatedUser", updatedUser)
+		const updatedUser = await UserModel.findByIdAndUpdate( query, updateUser )
 		
 		if (!updatedUser) return res.send(500, {error: err});
 		
