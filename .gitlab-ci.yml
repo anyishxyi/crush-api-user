@@ -35,7 +35,7 @@ publish-image-crush:
   image: docker:20.10-git
   stage: publish
   variables:
-    version: 1.1.5
+    version: 1.1.6
   before_script:
     - docker login -u gitlab-ci-token -p $GITLAB_ACCESS_TOKEN $CI_REGISTRY
   services:
