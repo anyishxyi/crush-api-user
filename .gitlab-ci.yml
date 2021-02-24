@@ -35,12 +35,14 @@ publish-image-crush:
   image: docker:20.10-git
   stage: publish
   variables:
-    version: 1.1.9
+    version: 1.1.10
   before_script:
     - docker login -u gitlab-ci-token -p $GITLAB_ACCESS_TOKEN $CI_REGISTRY
   services:
     - docker:dind
   script:
+    - chmod +x ./setup_env.sh
+    - ./setup_env.sh
     - git config user.email "${GITLAB_USER_EMAIL}"
     - git config user.name "${GITLAB_USER_NAME}"
     - git remote add tag-origin https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
