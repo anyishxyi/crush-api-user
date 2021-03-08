@@ -55,7 +55,7 @@ describe("testing-user-routes", () => {
 
 afterAll( async () => {
 	try {
-		await UserModel.findOneAndDelete({_id: savedUser._id});
+		// await UserModel.findOneAndDelete({_id: savedUser._id});
 		await mongoose.disconnect()
 	} catch (error) {
 		console.error(error);
