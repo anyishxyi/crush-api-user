@@ -21,6 +21,7 @@ describe('User Model Unit Test', () => {
 	it('create & save user successfully', async () => {
 		const validUser = new UserModel(userData);
 		savedUser = await validUser.save();
+		assert(false)
 
 		expect(savedUser._id).toBeDefined();
 		expect(savedUser.email).toBe(userData.email);
