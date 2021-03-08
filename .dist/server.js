@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _http = _interopRequireDefault(require("http"));
 
 var _app = _interopRequireDefault(require("./app"));
@@ -59,3 +64,5 @@ server.on('listening', () => {
   console.log('\nListening on ' + bind);
 });
 server.listen(port);
+var _default = server;
+exports.default = _default;
